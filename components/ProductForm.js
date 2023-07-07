@@ -31,11 +31,18 @@ export default function ProductForm({
 		 router.push('/products');
 	}
 
-	function uploadImages(ev) {
+	async function uploadImages(ev) {
 		const files = ev.target?.files;
 		if (files.length > 0) {
 			const data = new FormData();
-			files.forEach(file => data.append('file', file));
+			for (const file of files) {
+				data.append('file', file)
+			}
+			const res =  await fetch('/api/upload', {
+				method: 'POST',
+				body: data,
+			})
+			console.log(res);
 		}
 	}
 	return (
